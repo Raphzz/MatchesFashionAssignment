@@ -103,6 +103,7 @@
 		F88434FB26B15E9D00E5D50B /* CurrencyConverterServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyConverterServiceMock.swift; sourceTree = "<group>"; };
 		F88434FD26B167B600E5D50B /* ProductCellViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCellViewModelTests.swift; sourceTree = "<group>"; };
 		F88434FF26B16AE400E5D50B /* ProductDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModel.swift; sourceTree = "<group>"; };
+		F884350126B1701500E5D50B /* SecondChallenge.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = SecondChallenge.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F8B58B7526AF3A81004E1325 /* MatchesFashionAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MatchesFashionAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F8B58B8126AF3A81004E1325 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F8B58B8426AF3A81004E1325 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -247,6 +248,7 @@
 		F8B58B6C26AF3A81004E1325 = {
 			isa = PBXGroup;
 			children = (
+				F884350126B1701500E5D50B /* SecondChallenge.playground */,
 				F8B58B7726AF3A81004E1325 /* MatchesFashionAssignment */,
 				F8B58B8E26AF3A82004E1325 /* MatchesFashionAssignmentTests */,
 				F8B58B9926AF3A82004E1325 /* MatchesFashionAssignmentUITests */,
