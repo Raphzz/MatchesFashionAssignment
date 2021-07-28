@@ -1,14 +1,13 @@
 //
-//  MatchesFashionAssignmentTests.swift
+//  ProductListViewModelTests.swift
 //  MatchesFashionAssignmentTests
 //
-//  Created by Raphael Pedrini on 26/07/2021.
+//  Created by Raphael Pedrini on 28/07/2021.
 //
 
 import XCTest
-@testable import MatchesFashionAssignment
 
-class MatchesFashionAssignmentTests: XCTestCase {
+class ProductListViewModelTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
