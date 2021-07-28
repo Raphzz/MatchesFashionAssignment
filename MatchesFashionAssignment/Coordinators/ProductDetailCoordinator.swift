@@ -7,20 +7,19 @@
 
 import UIKit
 
-protocol ProductDetailCoordinatorDelegate: class
-{
+protocol ProductDetailCoordinatorDelegate: AnyObject {
 	func detailCoordinatorDidFinish(detailCoordinator: ProductDetailCoordinator)
 }
 
 class ProductDetailCoordinator: Coordinator {
 	
-	let product: Product
-	var navigation: UINavigationController
+	let productViewModel: ProductCellViewModel
+    var navigation: UINavigationController
 	
-	init(navigation: UINavigationController, product: Product)
+	init(navigation: UINavigationController, product: ProductCellViewModel)
 	{
 		self.navigation = navigation
-		self.product = product
+		self.productViewModel = product
 	}
 	
 	func start()
@@ -28,7 +27,7 @@ class ProductDetailCoordinator: Coordinator {
 		let productDetailVC = ProductsDetailController()
 		let viewModel = ProductDetailViewModel()
 		productDetailVC.viewModel = viewModel
-		viewModel.product = self.product
+		viewModel.product = self.productViewModel
 		navigation.pushViewController(productDetailVC, animated: true)
 	}
 }

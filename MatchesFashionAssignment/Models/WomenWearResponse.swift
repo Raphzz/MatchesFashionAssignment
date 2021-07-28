@@ -19,25 +19,22 @@ struct WomenWearResponse: Codable {
 
 // MARK: - Product
 struct Product: Codable {
-	let code: String
 	let name: String
     let price: Price
     let image: GalleryImages
     
     enum CodingKeys: String, CodingKey {
-        case code, name, price
+        case name, price
         case image = "primaryImageMap"
     }
 }
 
 // MARK: - Price
 struct Price: Codable {
-    let currencyIso: String
     let value: Int
-    let formattedValue: String
     
     enum CodingKeys: String, CodingKey {
-        case currencyIso, value, formattedValue
+        case value
     }
 }
 

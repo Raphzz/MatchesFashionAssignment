@@ -33,13 +33,10 @@ class ProductsDetailController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.backgroundColor = .white
-		
-//		detailContentView.snp.makeConstraints {
-//			$0.edges.equalToSuperview()
-//		}
 	}
+    
 	func refreshDisplay() {
-		let dataViewModel = ProductCellViewModel(withProduct: viewModel!.product!)
+        guard let dataViewModel = viewModel?.product else { return }
 		detailContentView.config(withViewModel: dataViewModel)
 	}
 }

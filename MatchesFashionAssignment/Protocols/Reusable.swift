@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol Reusable: class {}
+protocol Reusable: AnyObject {}
 
 extension Reusable where Self: UIView {
 	

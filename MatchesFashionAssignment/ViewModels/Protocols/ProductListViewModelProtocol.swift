@@ -7,17 +7,17 @@
 
 import Foundation
 
-protocol ProductListViewModelDelegate: class {
+protocol ProductListViewModelDelegate: AnyObject {
 	func productsDidLoad()
 }
 
-protocol ProductListViewModelCoordinatorDelegate: class {
-	func productDidSelect(_ viewModel: ProductListViewModel, data: Product)
+protocol ProductListViewModelCoordinatorDelegate: AnyObject {
+	func productDidSelect(data: ProductCellViewModel)
 }
 
 protocol ProductListViewModelProtocol {
 	var title: String { get }
-	var data: WeeklyTrends? { get set }
+	var data: WomenWearResponse? { get set }
 	var numberOfItems: Int { get }
 	
 	func productCellViewModel(at indexPath: IndexPath) -> ProductCellViewModel?

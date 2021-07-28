@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol ProductDetailViewModelDelegate: class {
+protocol ProductDetailViewModelDelegate: AnyObject {
 	func detailDidLoad(viewModel: ProductDetailViewModelProtocol)
 }
 
 protocol ProductDetailViewModelProtocol {
-	var product: Product? { get set }
+	var product: ProductCellViewModel? { get set }
 	var viewDelegate: ProductDetailViewModelDelegate? { get set }
 }

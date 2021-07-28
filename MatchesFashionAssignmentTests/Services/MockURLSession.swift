@@ -8,7 +8,7 @@
 
 import XCTest
 import Foundation
-@testable import WeeklyNewTrends
+@testable import MatchesFashionAssignment
 
 class MockURLSession: URLSessionProtocol {
     private (set) var lastURL: URL?

@@ -18,14 +18,6 @@ class ProductView: UIView {
 		return label
 	}()
 	
-	var color: UILabel = {
-		let label = UILabel()
-		label.font = UIFont.systemFont(ofSize: 15, weight: .light)
-		label.textColor = .systemGray2
-		label.numberOfLines = 2
-		return label
-	}()
-	
 	var price: UILabel = {
 		let label = UILabel()
 		label.font = UIFont.systemFont(ofSize: 15, weight: .light)
@@ -59,7 +51,6 @@ class ProductView: UIView {
 		
 		addSubview(image)
 		addSubview(name)
-		addSubview(color)
 		addSubview(price)
 		addSubview(favoriteBtn)
 		
@@ -77,22 +68,15 @@ class ProductView: UIView {
 			make.bottom.lessThanOrEqualToSuperview()
 		}
 		
-		color.snp.makeConstraints { make in
-			make.top.equalTo(name.snp.bottom).offset(3)
-			make.leading.equalToSuperview()
-			make.trailing.equalToSuperview()
-			make.bottom.lessThanOrEqualToSuperview()
-		}
-		
 		price.snp.makeConstraints { make in
-			make.top.equalTo(color.snp.bottom).offset(3)
+			make.top.equalTo(name.snp.bottom).offset(3)
 			make.leading.equalToSuperview()
 			make.bottom.lessThanOrEqualToSuperview()
 			make.bottom.equalToSuperview()
 		}
 		
 		favoriteBtn.snp.makeConstraints { make in
-			make.top.equalTo(color.snp.bottom).offset(3)
+			make.top.equalTo(price.snp.bottom).offset(3)
 			make.leading.equalTo(price.snp.trailing).offset(2)
 			make.trailing.equalToSuperview()
 			make.bottom.equalToSuperview()
@@ -103,9 +87,7 @@ class ProductView: UIView {
 	
 	func config(withViewModel viewModel: ProductCellViewModelProtocol) {
 		name.text = viewModel.productName()
-		color.text = viewModel.productColor()
 		price.text = viewModel.productPrice()
 		image.sd_setImage(with: viewModel.productImage(), placeholderImage: UIImage(named: "placeholder"))
 	}
-	
 }

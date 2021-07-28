@@ -11,7 +11,7 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol {
 	
 	weak var viewDelegate: ProductDetailViewModelDelegate?
 	
-	var product: Product? {
+	var product: ProductCellViewModel? {
 		didSet {
 			viewDelegate?.detailDidLoad(viewModel: self)
 		}

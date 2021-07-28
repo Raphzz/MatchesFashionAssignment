@@ -9,9 +9,11 @@ import Foundation
 
 class ProductCellViewModel: ProductCellViewModelProtocol {
 	
-	var product: Product
+	let product: Product
+    let currency: Currency
 	
-	init(withProduct product: Product) {
+    init(withProduct product: Product, withCurrency currency: Currency) {
 		self.product = product
+        self.currency = currency
 	}
 }

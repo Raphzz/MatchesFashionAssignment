@@ -17,7 +17,10 @@ class BaseService {
 	}
 	
 	internal func url(withPath path: String) -> URL? {
-		return URL(string: APIConstants.base + path)
+        guard path == APIConstants.urls.weeklyTrendProducts else {
+            return URL(string: APIConstants.currencyBase + path)
+        }
+        return URL(string: APIConstants.base + path)
 	}
 	
 	typealias ResultBlock<T> = (Result <T, Error>) -> Void
@@ -27,9 +30,9 @@ class BaseService {
 	* Need to pass url
 	- Parameter url: Url of event which will extened with page
 	*/
-	func fetch<T: Decodable>(listOf representable: T.Type,
-													 withURL url: URL?,
-													 completionHandler: @escaping (Result<T, ServiceFetchError>) -> Void) {
+	func fetch<T: Decodable>(result representable: T.Type,
+                                withURL url: URL?,
+                                completionHandler: @escaping (Result<T, ServiceFetchError>) -> Void) {
 		
 		guard let url = url else {
 			completionHandler(.failure(.invalidURL))

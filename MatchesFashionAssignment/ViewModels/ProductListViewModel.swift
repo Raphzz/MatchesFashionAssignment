@@ -7,22 +7,37 @@
 
 import UIKit
 
+enum AvailableCurrency: String {
+    case pound = "GBP"
+    case euro = "EUR"
+    case usd = "USD"
+    case australianDollar = "AUD"
+    case chineseYuan = "CNY"
+    case swissFranc = "CHF"
+}
+
 class ProductListViewModel: ProductListViewModelProtocol {
 	
+    var selectedCurrency: AvailableCurrency = .pound
+    
 	var title: String {
-		if let products = data {
-			return products.title
-		}
-		return "Weekly Trend"
+		return "Women Wear"
 	}
-	var numberOfItems: Int {
+    
+    var numberOfItems: Int {
 		if let items = data {
-			return items.productCount
+            return items.products.count
 		}
 		return 0
 	}
 	
-	internal var data: WeeklyTrends? {
+    internal var currency = Currency(name: AvailableCurrency.pound.rawValue, currencyRate: 1) {
+        didSet {
+            viewDelegate?.productsDidLoad()
+        }
+    }
+    
+	internal var data: WomenWearResponse? {
 		didSet {
 			viewDelegate?.productsDidLoad()
 		}
@@ -30,16 +45,32 @@ class ProductListViewModel: ProductListViewModelProtocol {
 	
 	var viewDelegate: ProductListViewModelDelegate?
 	var coordinatorDelegate: ProductListViewModelCoordinatorDelegate?
-	private let weeklyTrendService: WeeklyTrendService
-	let itemsPerRow: Int = 2
+    
+	private let womenWearService: WomenWearServiceProtocol
+    private let currencyConverterService: CurrencyConverterServiceProtocol
+	
+    let itemsPerRow: Int = 2
 	let cellPadding: CGFloat = 15.0
 	
-	init(withWeeklyTrendService weeklyTrendService: WeeklyTrendService) {
-		self.weeklyTrendService = weeklyTrendService
+    init(withWomenWearService womenWearService: WomenWearServiceProtocol, and currencyConverterService: CurrencyConverterServiceProtocol) {
+		self.womenWearService = womenWearService
+        self.currencyConverterService = currencyConverterService
 	}
+    
+    func getCurrencyRate(for currency: AvailableCurrency) {
+        currencyConverterService.fetch(currencyName: currency.rawValue) { [weak self] (result) in
+            switch result{
+            case .success(let response):
+                let currencyRate = response
+                self?.currency = Currency(name: currency.rawValue, currencyRate: currencyRate.conversionRate)
+            case .failure(let error):
+                DLog(error.localizedDescription)
+            }
+        }
+    }
 	
 	func getWeeklyTrendProducts() {
-		weeklyTrendService.fetch { [weak self] (result) in
+        womenWearService.fetch { [weak self] (result) in
 			switch result{
 			case .success(let response):
 				self?.data = response
@@ -57,7 +88,7 @@ extension ProductListViewModel {
 	
 	func productCellViewModel(at indexPath: IndexPath) -> ProductCellViewModel? {
 		if let items = data?.products {
-			return ProductCellViewModel(withProduct: items[indexPath.row])
+			return ProductCellViewModel(withProduct: items[indexPath.row], withCurrency: currency)
 		}
 		return nil
 	}
@@ -67,7 +98,7 @@ extension ProductListViewModel {
 		if let items = data?.products,
 		   let coordinatorDelegate = coordinatorDelegate,
 		   index < items.count {
-			coordinatorDelegate.productDidSelect(self, data: items[index])
+                coordinatorDelegate.productDidSelect(data: ProductCellViewModel(withProduct: items[index], withCurrency: currency))
 		}
 	}
 }

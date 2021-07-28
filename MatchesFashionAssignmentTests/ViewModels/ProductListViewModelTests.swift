@@ -6,27 +6,53 @@
 //
 
 import XCTest
+@testable import MatchesFashionAssignment
 
 class ProductListViewModelTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    let mockCurrencyService = CurrencyConverterServiceMock()
+    let mockWomenWearService = WomenWearServiceMock()
+    
+    var mockViewModel: ProductListViewModel!
+    
+    override func setUp() {
+        mockViewModel = ProductListViewModel(withWomenWearService: mockWomenWearService, and: mockCurrencyService)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testViewTitle() {
+        XCTAssertTrue(mockViewModel.title == "Women Wear")
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    
+    func testNumberOfItems() {
+        
+        // Fetch JSON Mock from mock service
+        mockViewModel.getWeeklyTrendProducts()
+        
+        XCTAssertTrue(mockViewModel.numberOfItems == 1)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testDefaultCurrency() {
+        let gbpCurrency = Currency(name: AvailableCurrency.pound.rawValue, currencyRate: 1)
+        
+        XCTAssertTrue(mockViewModel.currency.name == gbpCurrency.name)
     }
-
+    
+    func testGetProductCellViewModel() throws {
+        mockViewModel.getWeeklyTrendProducts()
+        
+        let firstProduct = try XCTUnwrap(mockViewModel.data?.products.first)
+        
+        let cellViewModel = try XCTUnwrap(mockViewModel.productCellViewModel(at: IndexPath(row: 0, section: 0)))
+        
+        XCTAssertTrue(firstProduct.name == cellViewModel.productName())
+    }
+    
+    func testFetchCurrency() {
+        mockViewModel.getCurrencyRate(for: .chineseYuan)
+        
+        let cnyCurrency = Currency(name: AvailableCurrency.chineseYuan.rawValue, currencyRate: 8.9413)
+        
+        XCTAssertTrue(mockViewModel.currency.name == cnyCurrency.name)
+        XCTAssertTrue(mockViewModel.currency.currencyRate == cnyCurrency.currencyRate)
+    }
 }

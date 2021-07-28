@@ -18,18 +18,13 @@ class AppCoordinator: Coordinator {
 		self.navigation = navigation
 		self.window = window
 		window.rootViewController = emptyState()
-		window.tintColor = .themeMain
 		window.backgroundColor = .themeMain
 		window.makeKeyAndVisible()
-		
-		navigation.navigationBar.tintColor = .black
-		let BarButtonItemAppearance = UIBarButtonItem.appearance()
-		BarButtonItemAppearance.setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.clear], for: .normal)
 	}
 	
 	func start()
 	{
-		let listCoordinator = ProductListCoordinator(navigation: navigation, weeklyTrendService: WeeklyTrendService())
+        let listCoordinator = ProductListCoordinator(navigation: navigation, weeklyTrendService: WomenWearService(), currencyConverterService: CurrencyConverterService())
 		listCoordinator.start()
 		window.rootViewController = listCoordinator.navigation
 	}

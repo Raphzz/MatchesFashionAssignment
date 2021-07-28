@@ -9,6 +9,7 @@ import Foundation
 
 protocol ProductCellViewModelProtocol {
 	var product: Product { get }
+    var currency: Currency { get }
 }
 
 extension ProductCellViewModelProtocol {
@@ -18,15 +19,16 @@ extension ProductCellViewModelProtocol {
 	}
 	
 	func productImage() -> URL? {
-		return product.url
+        return product.image.medium.url
 	}
+    
+    func productThumbnail() -> URL? {
+        return product.image.thumbnail.url
+    }
 	
 	func productPrice() -> String {
-		return product.price
-	}
-	
-	func productColor() -> String {
-		// Not in API, we are using just for UI ;)
-		return "White & Lemon"
+        let price = Double(product.price.value) * currency.currencyRate
+        
+        return String(format: "%.02f", price)
 	}
 }

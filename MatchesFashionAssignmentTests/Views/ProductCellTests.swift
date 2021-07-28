@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import WeeklyNewTrends
+@testable import MatchesFashionAssignment
 
 class ProductCellTests: XCTestCase {
 	

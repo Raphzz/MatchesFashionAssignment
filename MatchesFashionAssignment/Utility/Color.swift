@@ -8,5 +8,5 @@
 import UIKit
 
 extension UIColor {
-	static let themeMain = UIColor(named: "Theme/MainColor")!
+    static let themeMain = UIColor.white
 }

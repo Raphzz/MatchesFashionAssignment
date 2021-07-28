@@ -9,9 +9,10 @@
 import Foundation
 
 enum MockResponseType: String {
-	case invalidJsonResponse = "WeeklyProductListInvalidResponse"
-	case validJsonResponse = "WeeklyProductListValidResponse"
-	case emptyJsonResponse = "WeeklyProductListEmptyResponse"
+	case invalidJsonResponse = "WomenWearInvalidResponse"
+	case validJsonResponse = "WomenWearValidResponse"
+	case emptyJsonResponse = "WomenWearEmptyResponse"
+    case currencyConvertValidResponse = "CurrencyConverterValidResponse"
 }
 
 class MockResponseHelper {

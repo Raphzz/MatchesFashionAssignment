@@ -7,9 +7,13 @@
 
 import Foundation
 
-class WomenWearService: BaseService {
+protocol WomenWearServiceProtocol {
+    func fetch (completionHandler: @escaping (Result<WomenWearResponse, ServiceFetchError>) -> Void)
+}
+
+class WomenWearService: BaseService, WomenWearServiceProtocol {
 	
-	func fetch (completionHandler: @escaping (Result<WomenWearResponse, ServiceFetchError>) -> Void) {
+    func fetch (completionHandler: @escaping (Result<WomenWearResponse, ServiceFetchError>) -> Void) {
 		
 		fetch(result: WomenWearResponse.self, withURL: url(withPath: APIConstants.urls.weeklyTrendProducts)) { (result) in
 			switch result {

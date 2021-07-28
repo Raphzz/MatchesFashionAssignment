@@ -8,7 +8,7 @@
 
 import XCTest
 import Foundation
-@testable import WeeklyNewTrends
+@testable import MatchesFashionAssignment
 
 class ServiceTests: XCTestCase {
 	
@@ -24,12 +24,12 @@ class ServiceTests: XCTestCase {
 	}
 	
 	func testSessionURL() {
-		sut.fetch(listOf: WeeklyTrends.self, withURL: url) { (_) in}
+		sut.fetch(result: WomenWearResponse.self, withURL: url) { (_) in}
 		XCTAssert(session.lastURL == url)
 	}
-	
+
 	func testResponseError() {
-		sut.fetch(listOf: WeeklyTrends.self, withURL: url) { (result) in
+		sut.fetch(result: WomenWearResponse.self, withURL: url) { (result) in
 			switch result {
 			case .success(let events):
 				XCTAssertNil(events)
@@ -38,19 +38,19 @@ class ServiceTests: XCTestCase {
 			}
 		}
 	}
-	
+    
 	func testResumeCalled() {
 		let dataTask = MockURLSessionDataTask()
 		session.nextDataTask = dataTask
-		
-		sut.fetch(listOf: WeeklyTrends.self, withURL: url) { (_) in}
-		
+
+		sut.fetch(result: WomenWearResponse.self, withURL: url) { (_) in}
+
 		XCTAssert(dataTask.resumeWasCalled)
 	}
-	
+
 	func testInvalidURL() {
-		
-		sut.fetch(listOf: WeeklyTrends.self, withURL: nil) { (response) in
+
+		sut.fetch(result: WomenWearResponse.self, withURL: nil) { (response) in
 			switch response {
 			case .failure(let error):
 				XCTAssertEqual(error, ServiceFetchError.invalidURL)
@@ -61,7 +61,7 @@ class ServiceTests: XCTestCase {
 
 	func testWithError() {
 		session.nextError = .networkFailed
-		sut.fetch(listOf: WeeklyTrends.self, withURL: url) { (response) in
+		sut.fetch(result: WomenWearResponse.self, withURL: url) { (response) in
 			switch response {
 			case .failure(let error):
 				XCTAssertEqual(error, .networkFailed)
@@ -69,13 +69,13 @@ class ServiceTests: XCTestCase {
 			}
 		}
 	}
-	
+
 	func testInvalidResponse() {
-		
+
 		let exp = expectation(description: "Got an Invalid response")
 
 		session.nextData = MockResponseHelper().processJsonData(for: .invalidJsonResponse)
-		sut.fetch(listOf: WeeklyTrends.self, withURL: url) { (result) in
+		sut.fetch(result: WomenWearResponse.self, withURL: url) { (result) in
 			switch result {
 			case .success(let data):
 				XCTAssertEqual(data.products.count , 0)
@@ -84,16 +84,16 @@ class ServiceTests: XCTestCase {
 			}
 			exp.fulfill()
 		}
-		
+
 		waitForExpectations(timeout: 1.0, handler: nil)
 	}
-	
+
 	func testValidResponse() {
-		
+
 		let exp = expectation(description: "Got valid response")
 
 		session.nextData = MockResponseHelper().processJsonData(for: .validJsonResponse)
-		sut.fetch(listOf: WeeklyTrends.self, withURL: url) { (response) in
+		sut.fetch(result: WomenWearResponse.self, withURL: url) { (response) in
 			switch response {
 			case .success(let data):
 				XCTAssertFalse(data.products.isEmpty)
@@ -102,8 +102,7 @@ class ServiceTests: XCTestCase {
 			}
 			exp.fulfill()
 		}
-		
+
 		waitForExpectations(timeout: 1.0, handler: nil)
 	}
-	
 }

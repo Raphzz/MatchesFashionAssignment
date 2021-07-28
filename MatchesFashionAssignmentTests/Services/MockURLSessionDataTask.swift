@@ -7,7 +7,7 @@
 
 
 import Foundation
-@testable import WeeklyNewTrends
+@testable import MatchesFashionAssignment
 
 class MockURLSessionDataTask: URLSessionDataTaskProtocol {
     private (set) var resumeWasCalled = false
